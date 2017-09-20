@@ -81,6 +81,10 @@ module.exports = {
     sidebar_donate: '捐赠 ',
     sidebar_thanks: '感谢你！！！ ',
 
+    candlestick_show_token_from: '显示以',
+    candlestick_show_token_to: '兑换',
+    candlestick_token_default: '请选择',
+
     /* Decrypt Panel */
     decrypt_Access: '你将怎样使用钱包？ ',
     decrypt_Title: '选择你的私钥文件格式： ',
