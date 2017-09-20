@@ -16,6 +16,7 @@ export const history = getHistory();
 
 export const Routing = () =>
   <Route name="App" path="" component={App}>
+    <Route name="Candles" path="/" component={CandleStick} />
     <Route
       name="ViewWallet"
       path="/generate-wallet"
@@ -36,7 +37,6 @@ export const Routing = () =>
       path="/loopring-order-history"
       component={LoopringOrderHistory}
     />
-    <Route name="Candles" path="/" component={CandleStick} />
     <Redirect from="/*" to="/" />
   </Route>;
 

@@ -11,16 +11,16 @@ const tabs = [
     link: '/'
   },
   {
+    name: 'NAV_SendLoopringOrder',
+    link: 'send-loopring-order'
+  },
+  {
     name: 'NAV_ViewLoopringOrderHistory',
     link: 'loopring-order-history'
   },
   {
     name: 'NAV_SendEther',
     link: 'send-transaction'
-  },
-  {
-    name: 'NAV_SendLoopringOrder',
-    link: 'send-loopring-order'
   },
   {
     name: 'NAV_GenerateWallet',

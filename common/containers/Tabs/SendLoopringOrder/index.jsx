@@ -45,6 +45,7 @@ import { formatGasLimit } from 'utils/formatters';
 import type { ShowNotificationAction } from 'actions/notifications';
 import { showNotification } from 'actions/notifications';
 import { sha3, setLengthLeft, toBuffer } from 'ethereumjs-util';
+import WebSocket from 'ws/lib/WebSocket';
 
 type State = {
   readOnly: boolean,
