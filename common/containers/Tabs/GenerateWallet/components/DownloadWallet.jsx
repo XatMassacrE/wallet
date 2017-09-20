@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import translate from 'translations';
 import type PrivKeyWallet from 'libs/wallet/privkey';
 import { makeBlob } from 'utils/blob';
-import { getV3Filename } from 'libs/keystore';
+import { getV3Filename, UtcKeystore } from 'libs/keystore';
 
 type Props = {
   wallet: PrivKeyWallet,
@@ -13,10 +13,11 @@ type Props = {
 
 export default class DownloadWallet extends Component {
   props: Props;
-  keystore: Object;
+
   state = {
     hasDownloadedWallet: false,
-    address: ''
+    address: '',
+    keystore: Object
   };
 
   componentDidMount() {
@@ -27,11 +28,16 @@ export default class DownloadWallet extends Component {
   }
 
   componentWillMount() {
-    this.keystore = this.props.wallet.toKeystore(this.props.password);
+    this.props.wallet.toKeystore(this.props.password).then(keystore => {
+      this.setState({ keystore });
+    });
   }
+
   componentWillUpdate(nextProps: Props) {
     if (this.props.wallet !== nextProps.wallet) {
-      this.keystore = nextProps.wallet.toKeystore(nextProps.password);
+      nextProps.wallet.toKeystore(nextProps.password).then(keystore => {
+        this.setState({ keystore });
+      });
     }
   }
 
@@ -115,7 +121,7 @@ export default class DownloadWallet extends Component {
   }
 
   getBlob() {
-    return makeBlob('text/json;charset=UTF-8', this.keystore);
+    return makeBlob('text/json;charset=UTF-8', this.state.keystore);
   }
 
   getFilename() {

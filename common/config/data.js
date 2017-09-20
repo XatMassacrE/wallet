@@ -2,12 +2,16 @@
 import { RPCNode } from 'libs/nodes';
 
 export const LOOPRING_CONTRACT_ADDRESSES_MAP = {
-  BTC: '1MEWT2SGbqtz6mPCgFcnea8XmWV5Z4Wc6',
-  ETH: '0xEF68e7C694F40c8202821eDF525dE3782458639f',
-  REP: '0x7cB57B5A97eAbe94205C07890BE4c1aD31E486A8'
+  ETH: '0xEF68e7C694F40c8202821eDF525dE3782458639f'
 };
 
-export const donationAddressMap = LOOPRING_CONTRACT_ADDRESSES_MAP;
+export const Donate_ADDRESSES_MAP = {
+  ETH: '0xEF68e7C694F40c8202821eDF525dE3782458639f'
+};
+
+export const donationAddressMap = Donate_ADDRESSES_MAP;
+
+export const loopringContractAddressMap = LOOPRING_CONTRACT_ADDRESSES_MAP;
 
 export const gasPriceDefaults = {
   gasPriceMinGwei: 1,
@@ -161,6 +165,12 @@ export const NETWORKS: { [key: string]: NetworkConfig } = {
 
 export const NODES = {
   eth_mew: {
+    network: 'ETH',
+    lib: new RPCNode('https://api.myetherapi.com/eth'),
+    service: 'MyEtherWallet',
+    estimateGas: true
+  },
+  eth_local: {
     network: 'ETH',
     lib: new RPCNode('http://127.0.0.1:8545'),
     service: 'LocalNode',

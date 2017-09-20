@@ -9,7 +9,7 @@ import map from 'lodash/map';
 import { unlockPrivateKey, unlockKeystore } from 'actions/wallet';
 import { connect } from 'react-redux';
 
-const WALLETS = {
+let WALLETS = {
   'keystore-file': {
     lid: 'x_Keystore2',
     component: KeystoreDecrypt,
@@ -27,11 +27,12 @@ const WALLETS = {
       password: ''
     },
     unlock: unlockPrivateKey
-  },
-  'view-only': {
-    lid: 'View with Address Only',
-    component: ViewOnlyDecrypt
   }
+};
+
+const onlyviewWallet = {
+  lid: 'View with Address Only',
+  component: ViewOnlyDecrypt
 };
 
 type UnlockParams = {} | PrivateKeyValue;
@@ -43,7 +44,8 @@ type State = {
 
 export class WalletDecrypt extends Component {
   props: {
-    dispatch: (action: any) => void
+    dispatch: (action: any) => void,
+    view: boolean
   };
   state: State = {
     selectedWalletKey: 'keystore-file',
@@ -68,6 +70,10 @@ export class WalletDecrypt extends Component {
   }
 
   buildWalletOptions() {
+    if (this.props.view) {
+      WALLETS['view-only'] = onlyviewWallet;
+    }
+
     return map(WALLETS, (wallet, key) => {
       const isSelected = this.state.selectedWalletKey === key;
 

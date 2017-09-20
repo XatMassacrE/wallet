@@ -21,6 +21,10 @@ const tabs = [
   {
     name: 'NAV_ViewLoopringOrderHistory',
     link: 'loopring-order-history'
+  },
+  {
+    name: 'NAV_CandleStick',
+    link: 'candle-stick'
   }
 ];
 

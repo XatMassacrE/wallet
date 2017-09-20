@@ -6,17 +6,14 @@ import Big from 'bignumber.js';
 import EthTx from 'ethereumjs-tx';
 import { connect } from 'react-redux';
 import BaseWallet from 'libs/wallet/base';
-import { toUnit, toTokenDisplay } from 'libs/units';
-import ERC20 from 'libs/erc20';
+import { toTokenDisplay, toUnit } from 'libs/units';
 import { getTransactionFields } from 'libs/transaction';
 import { getTokens } from 'selectors/wallet';
 import { getNetworkConfig } from 'selectors/config';
-import type { NodeConfig } from 'config/data';
-import type { Token, NetworkConfig } from 'config/data';
-import { donationAddressMap } from 'config/data';
+import type { NetworkConfig, NodeConfig, Token } from 'config/data';
+import { loopringContractAddressMap } from 'config/data';
 import Modal from 'components/ui/Modal';
 import Identicon from 'components/ui/Identicon';
-import { Spin } from 'antd';
 
 type Props = {
   signedTransaction: string,
@@ -137,7 +134,7 @@ class ConfirmationModal extends React.Component {
               </div>
             </div>
             <div className="ConfModal-summary-icon ConfModal-summary-icon--to">
-              <Identicon size="100%" address={donationAddressMap.ETH} />
+              <Identicon size="100%" address={loopringContractAddressMap.ETH} />
             </div>
           </div>
 
@@ -147,7 +144,7 @@ class ConfirmationModal extends React.Component {
             </li>
             <li className="ConfModal-details-detail">
               You are approving allowance to{' '}
-              <code>{donationAddressMap.ETH} </code>
+              <code>{loopringContractAddressMap.ETH} </code>
             </li>
             <li className="ConfModal-details-detail">
               You are approving allowance{' '}

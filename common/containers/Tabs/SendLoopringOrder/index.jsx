@@ -11,16 +11,17 @@ import {
   CustomMessage,
   DataField,
   GasField,
-  ConfirmationModal
+  OrderSideBar,
+  ConfirmationModal,
+  LoopringTxFee,
+  SaveSharing
 } from './components';
-import { BalanceSidebar } from 'components';
-import pickBy from 'lodash/pickBy';
 import type { State as AppState } from 'reducers';
 import { connect } from 'react-redux';
 import BaseWallet from 'libs/wallet/base';
 import customMessages from './messages';
 import type { NetworkConfig, Token, NodeConfig } from 'config/data';
-import { donationAddressMap } from 'config/data';
+import { loopringContractAddressMap } from 'config/data';
 import { isValidETHAddress } from 'libs/validators';
 import {
   getGasPriceGwei,
@@ -46,7 +47,6 @@ import { showNotification } from 'actions/notifications';
 import { sha3, setLengthLeft, toBuffer } from 'ethereumjs-util';
 
 type State = {
-  hasQueryString: boolean,
   readOnly: boolean,
   to: string,
   buyAmount: string,
@@ -64,19 +64,11 @@ type State = {
   showTxConfirm: boolean,
   showPreTxConfirm: boolean,
   showAllow: boolean,
+  loopringTxFee: string,
+  savingShare: string,
   pretransaction: ?BroadcastTransaction,
   transaction: ?BroadcastTransaction
 };
-
-function getParam(query: { [string]: string }, key: string) {
-  const keys = Object.keys(query);
-  const index = keys.findIndex(k => k.toLowerCase() === key.toLowerCase());
-  if (index === -1) {
-    return null;
-  }
-
-  return query[keys[index]];
-}
 
 type Props = {
   location: {
@@ -102,7 +94,6 @@ type Props = {
 export class SendExchange extends React.Component {
   props: Props;
   state: State = {
-    hasQueryString: false,
     readOnly: false,
     buyAmount: '',
     sellAmount: '',
@@ -119,16 +110,13 @@ export class SendExchange extends React.Component {
     showTxConfirm: false,
     showPreTxConfirm: false,
     showAllow: false,
+    loopringTxFee: '2',
+    savingShare: '50',
     transaction: null,
     pretransaction: null
   };
 
-  componentDidMount() {
-    const queryPresets = pickBy(this.parseQuery());
-    if (Object.keys(queryPresets).length) {
-      this.setState({ ...queryPresets, hasQueryString: true });
-    }
-  }
+  componentDidMount() {}
 
   componentDidUpdate(_prevProps: Props, prevState: State) {
     if (
@@ -157,13 +145,13 @@ export class SendExchange extends React.Component {
       predata,
       data,
       readOnly,
-      hasQueryString,
       showTxConfirm,
-      showPreTxConfirm,
       showAllow,
       tokenSellAllowance,
       tokenAllowance,
       pretransaction,
+      loopringTxFee,
+      savingShare,
       transaction
     } = this.state;
     const customMessage = customMessages.find(m => m.to === to);
@@ -172,26 +160,24 @@ export class SendExchange extends React.Component {
       <section className="container" style={{ minHeight: '50%' }}>
         <div className="tab-content">
           <main className="tab-pane active">
-            {hasQueryString &&
-              <div className="alert alert-info">
-                <p>
-                  {translate('WARN_Send_Link')}
-                </p>
-              </div>}
-
-            <UnlockHeader title={'NAV_SendLoopringOrder'} />
+            <UnlockHeader title={'NAV_SendLoopringOrder'} view={false} />
 
             {unlocked &&
               <article className="row">
-                {'' /* <!-- Sidebar --> */}
-                <section className="col-sm-4">
-                  <div style={{ maxWidth: 350 }}>
-                    <BalanceSidebar />
+                <section className="col-sm-5">
+                  <div style={{ maxWidth: 720 }}>
+                    <OrderSideBar
+                      sellToken={this.props.tokens.find(
+                        x => x.symbol === this.state.sellUnit
+                      )}
+                      buyToken={this.props.tokens.find(
+                        x => x.symbol === this.state.buyUnit
+                      )}
+                    />
                     <hr />
                   </div>
                 </section>
-
-                <section className="col-sm-8">
+                <section className="col-sm-7">
                   <div className="row form-group">
                     <h4 className="col-xs-12">
                       {translate('SEND_trans')}
@@ -217,6 +203,18 @@ export class SendExchange extends React.Component {
                       .sort()}
                     onChange={readOnly ? void 0 : this.onBuyAmountChange}
                   />
+
+                  <LoopringTxFee
+                    value={loopringTxFee}
+                    onChange={this.onLoopringTxFeeChange}
+                  />
+
+                  <SaveSharing
+                    value={savingShare}
+                    onChange={this.onSaveShareChange}
+                  />
+                  <br />
+                  <br />
                   <div className="form-group">
                     <a
                       className="btn btn-primary btn-block col-sm-11"
@@ -227,13 +225,13 @@ export class SendExchange extends React.Component {
                   </div>
                 </section>
                 {showAllow &&
-                  <section className="col-sm-8">
+                  <section className="col-sm-7">
                     <div className="row form-group">
                       <h4 className="col-xs-12">
                         {translate('Approve_Allowance')}
                       </h4>
                     </div>
-                    <AddressField value={donationAddressMap.ETH} />
+                    <AddressField value={loopringContractAddressMap.ETH} />
                     <AllowanceAmountField
                       title="Allow_amount"
                       value={allowAmount}
@@ -307,16 +305,6 @@ export class SendExchange extends React.Component {
               </article>}
           </main>
         </div>
-        {pretransaction &&
-          showPreTxConfirm &&
-          <ConfirmationModal
-            wallet={this.props.wallet}
-            node={this.props.node}
-            signedTransaction={pretransaction.signedTx}
-            allowanceValue="0"
-            onCancel={this.cancelPreTx}
-            onConfirm={this.confirmPreTx}
-          />}
         {transaction &&
           showTxConfirm &&
           <ConfirmationModal
@@ -331,29 +319,14 @@ export class SendExchange extends React.Component {
     );
   }
 
-  parseQuery() {
-    const query = this.props.location.query;
-    const to = getParam(query, 'to');
-    const data = getParam(query, 'data');
-    const unit = getParam(query, 'tokenSymbol');
-    const value = getParam(query, 'value');
-    let gasLimit = getParam(query, 'gas');
-    if (gasLimit === null) {
-      gasLimit = getParam(query, 'limit');
-    }
-    const readOnly = getParam(query, 'readOnly') == null ? false : true;
-
-    return { to, data, value, unit, gasLimit, readOnly };
-  }
-
   isValid() {
-    const { to, value } = this.state;
+    const { allowAmount } = this.state;
     return (
-      isValidETHAddress(to) &&
-      value &&
-      Number(value) > 0 &&
-      !isNaN(Number(value)) &&
-      isFinite(Number(value))
+      isValidETHAddress(loopringContractAddressMap.ETH) &&
+      allowAmount &&
+      Number(allowAmount) >= 0 &&
+      !isNaN(Number(allowAmount)) &&
+      isFinite(Number(allowAmount))
     );
   }
 
@@ -367,7 +340,9 @@ export class SendExchange extends React.Component {
         value: valueToHex(this.state.value)
       };
     }
-    const token = this.props.tokens.find(x => x.symbol === this.state.unit);
+    const token = this.props.tokens.find(
+      x => x.symbol === this.state.allowUnit
+    );
     if (!token) {
       throw new Error('No matching token');
     }
@@ -388,35 +363,13 @@ export class SendExchange extends React.Component {
     if (!trans) {
       return;
     }
-
-    // Grab a reference to state. If it has changed by the time the estimateGas
-    // call comes back, we don't want to replace the gasLimit in state.
     const state = this.state;
-
     this.props.nodeLib.estimateGas(trans).then(gasLimit => {
       if (this.state === state) {
         this.setState({ gasLimit: formatGasLimit(gasLimit, state.unit) });
       }
     });
   }
-
-  // FIXME use mkTx instead or something that could take care of default gas/data and whatnot,
-  onNewTx = (
-    address: string,
-    amount: string,
-    unit: string,
-    data: string = '',
-    gasLimit: string = '21000'
-  ) => {
-    this.setState({
-      to: address,
-      value: amount,
-      unit,
-      data,
-      gasLimit,
-      gasChanged: false
-    });
-  };
 
   onGasChange = (value: string) => {
     this.setState({ gasLimit: value, gasChanged: true });
@@ -437,13 +390,17 @@ export class SendExchange extends React.Component {
 
     if (value > tokenBalance.balance) {
       value = tokenBalance.balance.toString();
-      this.props.showNotification('danger', 'insufficient token balance', 2000);
+      this.props.showNotification(
+        'warning',
+        'insufficient token balance',
+        2000
+      );
     }
 
     const method =
       '0x' + sha3('approve(address, uint256)').toString('hex').slice(0, 8);
     const address = setLengthLeft(
-      toBuffer(donationAddressMap.ETH),
+      toBuffer(loopringContractAddressMap.ETH),
       32
     ).toString('hex');
 
@@ -478,7 +435,7 @@ export class SendExchange extends React.Component {
         '0x' + sha3('allowance(address, address)').toString('hex').slice(0, 8);
       const owner = setLengthLeft(toBuffer(address), 32).toString('hex');
       const spender = setLengthLeft(
-        toBuffer(donationAddressMap.ETH),
+        toBuffer(loopringContractAddressMap.ETH),
         32
       ).toString('hex');
       allowance = (await this.props.nodeLib.getAllowance({
@@ -505,33 +462,26 @@ export class SendExchange extends React.Component {
   };
 
   onSellAmountChange = async (value: string, unit: string) => {
-    let allowance = '0';
+    const token = this.props.tokens.find(token => token.symbol === unit);
+    if (!token) {
+      return;
+    }
+    const contractAddress = token.address;
+    const address = await this.props.wallet.getAddress();
+    const method =
+      '0x' + sha3('allowance(address, address)').toString('hex').slice(0, 8);
+    const owner = setLengthLeft(toBuffer(address), 32).toString('hex');
+    const spender = setLengthLeft(
+      toBuffer(loopringContractAddressMap.ETH),
+      32
+    ).toString('hex');
+    const allowance = (await this.props.nodeLib.getAllowance({
+      to: contractAddress,
+      data: method + owner + spender
+    })).toString();
+
     if (value === 'everything') {
-      const tokenBanance = this.props.tokenBalances.find(
-        token => token.symbol === unit
-      );
-      if (!tokenBanance) {
-        return;
-      }
-      value = tokenBanance.balance.toString();
-    } else {
-      const token = this.props.tokens.find(token => token.symbol === unit);
-      if (!token) {
-        return;
-      }
-      const contractAddress = token.address;
-      const address = await this.props.wallet.getAddress();
-      const method =
-        '0x' + sha3('allowance(address, address)').toString('hex').slice(0, 8);
-      const owner = setLengthLeft(toBuffer(address), 32).toString('hex');
-      const spender = setLengthLeft(
-        toBuffer(donationAddressMap.ETH),
-        32
-      ).toString('hex');
-      allowance = (await this.props.nodeLib.getAllowance({
-        to: contractAddress,
-        data: method + owner + spender
-      })).toString();
+      value = allowance;
     }
 
     this.setState({
@@ -609,7 +559,7 @@ export class SendExchange extends React.Component {
         }
       }
     } catch (err) {
-      this.props.showNotification('danger', err.message, 5000);
+      this.props.showNotification('danger', err.message, 2000);
     }
   };
 
@@ -630,33 +580,11 @@ export class SendExchange extends React.Component {
   cancelTx = () => {
     this.setState({ showTxConfirm: false });
   };
-  cancelPreTx = () => {
-    this.setState({ showPreTxConfirm: false });
-  };
-
-  confirmPreTx = async (rawtx: string, tx: EthTx) => {
-    try {
-      const hash = await this.props.nodeLib.sendSingedTransaction(rawtx);
-      let isCompleted = await this.props.nodeLib.checkTxisinBlock(hash);
-      const sheduler = setInterval(async () => {
-        if (!isCompleted) {
-          isCompleted = await this.props.nodeLib.checkTxisinBlock(hash);
-        } else {
-          clearInterval(sheduler);
-        }
-      }, 1000);
-      this.setState({ showTxConfirm: true, showPreTxConfirm: false });
-    } catch (err) {
-      this.setState({ showTxConfirm: false, showPreTxConfirm: false });
-      this.props.showNotification('danger', err.message, 5000);
-    }
-  };
 
   confirmTx = async (rawtx: string, tx: EthTx) => {
     try {
       await this.props.nodeLib.sendSingedTransaction(rawtx);
       this.setState({
-        hasQueryString: false,
         readOnly: false,
         buyAmount: '',
         sellAmount: '',
@@ -678,11 +606,95 @@ export class SendExchange extends React.Component {
       });
     } catch (err) {
       this.setState({ showTxConfirm: false, showPreTxConfirm: false });
-      this.props.showNotification('danger', err.message, 5000);
+      this.props.showNotification('danger', err.message, 2000);
     }
   };
 
-  submitTx = () => {};
+  submitTx = async () => {
+    const { buyAmount, sellAmount } = this.state;
+    const valid =
+      buyAmount &&
+      sellAmount &&
+      Number(buyAmount) > 0 &&
+      Number(sellAmount) > 0 &&
+      !isNaN(Number(buyAmount)) &&
+      !isNaN(Number(sellAmount)) &&
+      isFinite(Number(buyAmount)) &&
+      isFinite(Number(sellAmount));
+
+    if (!valid) {
+      this.props.showNotification('danger', 'illegal inputs', 2000);
+      return;
+    }
+    const token = this.props.tokens.find(
+      token => token.symbol === this.state.sellUnit
+    );
+    if (!token) {
+      return;
+    }
+    const contractAddress = token.address;
+    const address = await this.props.wallet.getAddress();
+    const method =
+      '0x' + sha3('allowance(address, address)').toString('hex').slice(0, 8);
+    const owner = setLengthLeft(toBuffer(address), 32).toString('hex');
+    const spender = setLengthLeft(
+      toBuffer(loopringContractAddressMap.ETH),
+      32
+    ).toString('hex');
+    const allowance = (await this.props.nodeLib.getAllowance({
+      to: contractAddress,
+      data: method + owner + spender
+    })).toString();
+
+    if (allowance < this.state.sellAmount) {
+      this.props.showNotification(
+        'warning',
+        'insufficient token allowance',
+        1000
+      );
+    }
+  };
+
+  onLoopringTxFeeChange = (value: string) => {
+    if (Number(value) === 0) {
+      this.setState({ loopringTxFee: value, savingShare: '100' });
+      return;
+    }
+
+    if (Number(value) > 0 && isFinite(Number(value))) {
+      this.setState({ loopringTxFee: value });
+      return;
+    }
+
+    this.props.showNotification('warning', 'illegal input data', 1000);
+  };
+
+  onSaveShareChange = (value: string) => {
+    const { loopringTxFee } = this.state;
+
+    if (Number(loopringTxFee) > 0) {
+      if (Number(value) > 100) {
+        this.props.showNotification(
+          'warning',
+          'should not be bigger than 100%',
+          1000
+        );
+        return;
+      }
+
+      if (Number(value) >= 0 && isFinite(Number(value))) {
+        this.setState({ savingShare: value });
+        return;
+      }
+      this.props.showNotification('warning', 'illegal input data', 1000);
+    } else {
+      this.props.showNotification(
+        'warning',
+        'while loopring tx fee is Zero, the savesharing is set to 100% by default',
+        1000
+      );
+    }
+  };
 }
 
 function mapStateToProps(state: AppState) {

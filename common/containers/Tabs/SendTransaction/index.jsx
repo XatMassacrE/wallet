@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import BaseWallet from 'libs/wallet/base';
 // import type { Transaction } from './types';
 import customMessages from './messages';
-import { donationAddressMap } from 'config/data';
+import { loopringContractAddressMap } from 'config/data';
 import { isValidETHAddress } from 'libs/validators';
 import {
   getNodeLib,
@@ -44,6 +44,7 @@ import { toWei } from 'libs/units';
 import { formatGasLimit } from 'utils/formatters';
 import { showNotification } from 'actions/notifications';
 import type { ShowNotificationAction } from 'actions/notifications';
+import { Link } from 'react-router';
 
 type State = {
   hasQueryString: boolean,
@@ -162,7 +163,7 @@ export class SendTransaction extends React.Component {
                 </p>
               </div>}
 
-            <UnlockHeader title={'NAV_SendEther'} />
+            <UnlockHeader title={'NAV_SendEther'} view={false} />
 
             {unlocked &&
               <article className="row">
@@ -195,7 +196,7 @@ export class SendTransaction extends React.Component {
                     </h4>
                   </div>
                   <AddressField
-                    placeholder={donationAddressMap.ETH}
+                    placeholder={loopringContractAddressMap.ETH}
                     value={this.state.to}
                     onChange={readOnly ? null : this.onAddressChange}
                   />
@@ -224,6 +225,7 @@ export class SendTransaction extends React.Component {
                       <a
                         className="btn btn-info btn-block"
                         onClick={this.generateTx}
+                        disabled={!this.isValid()}
                       >
                         {translate('SEND_generate')}
                       </a>
@@ -259,6 +261,7 @@ export class SendTransaction extends React.Component {
                     <a
                       className="btn btn-primary btn-block col-sm-11"
                       onClick={this.openTxModal}
+                      disabled={!transaction}
                     >
                       {translate('SEND_trans')}
                     </a>
@@ -394,15 +397,17 @@ export class SendTransaction extends React.Component {
     if (value === 'everything') {
       if (unit === 'ether') {
         value = this.props.balance.toString();
+      } else {
+        const token = this.props.tokenBalances.find(
+          token => token.symbol === unit
+        );
+        if (!token) {
+          return;
+        }
+        value = token.balance.toString();
       }
-      const token = this.props.tokenBalances.find(
-        token => token.symbol === unit
-      );
-      if (!token) {
-        return;
-      }
-      value = token.balance.toString();
     }
+
     this.setState({
       value,
       unit
@@ -440,7 +445,15 @@ export class SendTransaction extends React.Component {
   };
 
   openTxModal = () => {
-    this.setState({ showConfirm: true });
+    if (this.state.transaction) {
+      this.setState({ showConfirm: true });
+    } else {
+      this.props.showNotification(
+        'warning',
+        'Please Generate Transaction first',
+        1000
+      );
+    }
   };
 
   cancelTx = () => {

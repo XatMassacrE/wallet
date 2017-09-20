@@ -8,3 +8,6 @@ export { default as ConfirmationModal } from './ConfirmationModal';
 export { default as AllowanceAmountField } from './AllowanceAmountField';
 export { default as BuyAmountField } from './BuyAmountField';
 export { default as SellAmountField } from './SellAmountField';
+export { default as OrderSideBar } from './OrderSideBar';
+export { default as LoopringTxFee } from './LoopringTxFee';
+export { default as SaveSharing } from './SaveSharing';

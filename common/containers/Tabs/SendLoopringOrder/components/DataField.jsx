@@ -2,7 +2,6 @@
 import React from 'react';
 import translate from 'translations';
 import { isValidHex } from 'libs/validators';
-import { donationAddressMap } from 'config/data';
 
 export default class DataField extends React.Component {
   props: {

@@ -10,6 +10,8 @@ import SendTransaction from 'containers/Tabs/SendTransaction';
 import Contracts from 'containers/Tabs/Contracts';
 import SendLoopringOrder from 'containers/Tabs/SendLoopringOrder';
 import LoopringOrderHistory from 'containers/Tabs/LoopringOrderHistory';
+import CandleStick from 'containers/Tabs/CandleStick';
+
 export const history = getHistory();
 
 export const Routing = () =>
@@ -29,6 +31,11 @@ export const Routing = () =>
       name="OrderHistory"
       path="/loopring-order-history"
       component={LoopringOrderHistory}
+    />
+    <Route
+      name="Candles"
+      path="/candle-stick"
+      component={CandleStick}
     />
     <Redirect from="/*" to="/" />
   </Route>;

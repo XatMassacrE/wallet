@@ -2,7 +2,7 @@
 import React from 'react';
 import translate from 'translations';
 import { isValidHex } from 'libs/validators';
-import { donationAddressMap } from 'config/data';
+import { loopringContractAddressMap } from 'config/data';
 
 export default class DataField extends React.Component {
   props: {
@@ -38,7 +38,7 @@ export default class DataField extends React.Component {
                     ? 'is-valid'
                     : 'is-invalid'}`}
                   type="text"
-                  placeholder={readOnly ? '' : donationAddressMap.ETH}
+                  placeholder={readOnly ? '' : loopringContractAddressMap.ETH}
                   value={value || ''}
                   disabled={readOnly}
                   onChange={this.onChange}

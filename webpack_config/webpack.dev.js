@@ -29,5 +29,4 @@ base.plugins.push(
   new webpack.NoEmitOnErrorsPlugin(),
   new FriendlyErrors()
 );
-
 module.exports = base;

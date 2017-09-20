@@ -5,7 +5,6 @@ import GasPriceDropdown from './components/GasPriceDropdown';
 import { Link } from 'react-router';
 import { Dropdown } from 'components/ui';
 import { languages, NODES } from '../../config/data';
-import logo from 'assets/images/logo-myetherwallet.svg';
 
 import './index.scss';
 

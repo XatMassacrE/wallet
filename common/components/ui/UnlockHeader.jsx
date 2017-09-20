@@ -9,6 +9,7 @@ import type { State } from 'reducers';
 
 type Props = {
   title: string,
+  view: boolean,
   wallet: BaseWallet
 };
 
@@ -29,7 +30,6 @@ export class UnlockHeader extends React.Component {
       this.setState({ expanded: false });
     }
 
-    // not sure if could happen
     if (!this.props.wallet && this.props.wallet !== prevProps.wallet) {
       this.setState({ expanded: true });
     }
@@ -50,9 +50,7 @@ export class UnlockHeader extends React.Component {
         </div>
         {this.state.expanded &&
           <div>
-            <WalletDecrypt />
-            {/* @@if (site === 'cx' )  {  <cx-wallet-decrypt-drtv></cx-wallet-decrypt-drtv>   }
-    @@if (site === 'mew' ) {  <wallet-decrypt-drtv></wallet-decrypt-drtv>         } */}
+            <WalletDecrypt view={this.props.view} />
           </div>}
 
         {this.state.expanded && <hr />}
