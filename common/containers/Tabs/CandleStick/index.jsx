@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import translate from 'translations';
-var echarts = require('echarts');
 import UnitDropdown from './components/UnitDropdown';
 import { getTokens } from 'selectors/wallet';
 import { connect } from 'react-redux';
@@ -11,11 +10,13 @@ import {
     getNodeConfig
 } from 'selectors/config';
 import type { RPCNode } from 'libs/nodes';
+var echarts = require('echarts');
 
 var upColor = '#ec0000';
 var upBorderColor = '#8A0000';
 var downColor = '#00da3c';
 var downBorderColor = '#008F28';
+var chooseTitle = translate('candlestick_token_default')
 
 type Props = {
     tokens: Token[],
@@ -429,8 +430,8 @@ var myChart;
 class CandleStick extends Component {
     props: Props;
     state: State = {
-        fromToken: "请选择",
-        toToken: "请选择",
+        fromToken: chooseTitle,
+        toToken: chooseTitle,
         showData: {
             categoryData: [],
             values: []
@@ -445,20 +446,19 @@ class CandleStick extends Component {
         if(nextState && nextState.showData && nextState.showData.categoryData.length > 0){
             myChart.clear();
             myChart.setOption(getOption(nextState.showData));
-
         }
     }
 
     render() {
         return (
             <div>
-              显示以
+              {translate('candlestick_show_token_from')}
               <UnitDropdown
                   value={this.state.fromToken}
                   options={this.props.tokens.map(token => token.symbol).sort()}
                   onChange={this.onFromUnitChange}
               />
-              兑换
+              {translate('candlestick_show_token_to')}
               <UnitDropdown
                   value={this.state.toToken}
                   options={this.props.tokens.map(token => token.symbol).sort()}
@@ -474,8 +474,7 @@ class CandleStick extends Component {
         this.setState({
             fromToken: unit
         });
-
-        if(this.state.fromToken != unit && this.state.toToken != '请选择'){
+        if(this.state.fromToken != unit && this.state.toToken != chooseTitle){
             this.getData(unit, this.state.toToken)
         }
     };
@@ -483,8 +482,7 @@ class CandleStick extends Component {
         this.setState({
             toToken: unit
         });
-
-        if(this.state.toToken != unit && this.state.fromToken != '请选择'){
+        if(this.state.toToken != unit && this.state.fromToken != chooseTitle){
             this.getData(this.state.fromToken, unit)
         }
     };

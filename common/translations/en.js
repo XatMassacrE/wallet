@@ -25,6 +25,7 @@ module.exports = {
     NAV_YourWallets: 'Your Wallets ',
     NAV_SendLoopringOrder: 'Send Loopring Order',
     Approve_Allowance: 'Approve Allowance',
+    NAV_CandleStick: "Candle Stick",
 
     /* General */
     x_Access: 'Access ',
@@ -110,6 +111,10 @@ module.exports = {
     ADD_Ledger_scan: 'Connect to Ledger Nano S ',
     x_Trezor: 'TREZOR ',
     ADD_Trezor_scan: 'Connect to TREZOR ',
+
+    candlestick_show_token_from: 'Show deals from',
+    candlestick_show_token_to: 'To',
+    candlestick_token_default: 'Choose',
 
     /* Add Wallet */
     ADD_Label_1: 'What would you like to do? ',
