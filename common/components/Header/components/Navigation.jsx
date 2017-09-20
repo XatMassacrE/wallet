@@ -7,8 +7,12 @@ import './Navigation.scss';
 
 const tabs = [
   {
-    name: 'NAV_GenerateWallet',
+    name: 'NAV_CandleStick',
     link: '/'
+  },
+  {
+    name: 'NAV_ViewLoopringOrderHistory',
+    link: 'loopring-order-history'
   },
   {
     name: 'NAV_SendEther',
@@ -19,12 +23,8 @@ const tabs = [
     link: 'send-loopring-order'
   },
   {
-    name: 'NAV_ViewLoopringOrderHistory',
-    link: 'loopring-order-history'
-  },
-  {
-    name: 'NAV_CandleStick',
-    link: 'candle-stick'
+    name: 'NAV_GenerateWallet',
+    link: 'generate-wallet'
   }
 ];
 

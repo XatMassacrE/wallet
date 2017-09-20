@@ -16,7 +16,11 @@ export const history = getHistory();
 
 export const Routing = () =>
   <Route name="App" path="" component={App}>
-    <Route name="ViewWallet" path="/" component={GenerateWallet} />
+    <Route
+      name="ViewWallet"
+      path="/generate-wallet"
+      component={GenerateWallet}
+    />
     <Route name="GenerateWallet" path="/view-wallet" component={ViewWallet} />
     <Route name="Help" path="/help" component={Help} />
     <Route name="Swap" path="/swap" component={Swap} />
@@ -32,11 +36,7 @@ export const Routing = () =>
       path="/loopring-order-history"
       component={LoopringOrderHistory}
     />
-    <Route
-      name="Candles"
-      path="/candle-stick"
-      component={CandleStick}
-    />
+    <Route name="Candles" path="/" component={CandleStick} />
     <Redirect from="/*" to="/" />
   </Route>;
 
