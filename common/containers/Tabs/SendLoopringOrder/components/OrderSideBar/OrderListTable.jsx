@@ -1,6 +1,5 @@
 import React from 'react';
 import { LoopingOrder } from 'libs/LoopringOrder';
-import map from 'lodash/map';
 
 export type order = {
   orderId: string,

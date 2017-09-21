@@ -46,7 +46,7 @@ import type { ShowNotificationAction } from 'actions/notifications';
 import { showNotification } from 'actions/notifications';
 import { sha3, setLengthLeft, toBuffer } from 'ethereumjs-util';
 import WebSocket from 'ws/lib/WebSocket';
-
+import WebSocket from 'ws/lib/WebSocket';
 type State = {
   readOnly: boolean,
   to: string,
@@ -117,7 +117,16 @@ export class SendExchange extends React.Component {
     pretransaction: null
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    // const webSocket = new WebSocket('ws://localhost:10000');
+    // webSocket.addEventListener('open', function (event) {
+    //   console.log('establish a WebSocket connection')
+    // });
+    //
+    // webSocket.addEventListener('message', function (event) {
+    //   this.setState({})
+    // });
+  }
 
   componentDidUpdate(_prevProps: Props, prevState: State) {
     if (

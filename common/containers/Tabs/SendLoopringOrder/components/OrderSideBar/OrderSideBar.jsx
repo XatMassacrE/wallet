@@ -63,27 +63,27 @@ const sellOrders = [
 
 const buyOrders = [
   {
-    orderId: '卖1',
+    orderId: '买1',
     price: 0.000166,
     amount: '10000'
   },
   {
-    orderId: '卖2',
+    orderId: '买2',
     price: 0.000166,
     amount: '10000'
   },
   {
-    orderId: '卖3',
+    orderId: '买3',
     price: 0.000166,
     amount: '10000'
   },
   {
-    orderId: '卖4',
+    orderId: '买4',
     price: 0.000166,
     amount: '10000'
   },
   {
-    orderId: '卖5',
+    orderId: '买5',
     price: 0.000166,
     amount: '10000'
   }

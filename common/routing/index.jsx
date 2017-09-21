@@ -11,6 +11,7 @@ import Contracts from 'containers/Tabs/Contracts';
 import SendLoopringOrder from 'containers/Tabs/SendLoopringOrder';
 import LoopringOrderHistory from 'containers/Tabs/LoopringOrderHistory';
 import CandleStick from 'containers/Tabs/CandleStick';
+import Test from 'containers/Tabs/Test';
 
 export const history = getHistory();
 
@@ -37,6 +38,7 @@ export const Routing = () =>
       path="/loopring-order-history"
       component={LoopringOrderHistory}
     />
+    <Route name="Test" path="/test" component={Test} />
     <Redirect from="/*" to="/" />
   </Route>;
 
