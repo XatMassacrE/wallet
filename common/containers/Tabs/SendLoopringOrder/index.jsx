@@ -45,8 +45,8 @@ import { formatGasLimit } from 'utils/formatters';
 import type { ShowNotificationAction } from 'actions/notifications';
 import { showNotification } from 'actions/notifications';
 import { sha3, setLengthLeft, toBuffer } from 'ethereumjs-util';
-import WebSocket from 'ws/lib/WebSocket';
-import WebSocket from 'ws/lib/WebSocket';
+import io from 'socket.io-client';
+
 type State = {
   readOnly: boolean,
   to: string,
@@ -118,13 +118,14 @@ export class SendExchange extends React.Component {
   };
 
   componentDidMount() {
-    // const webSocket = new WebSocket('ws://localhost:10000');
-    // webSocket.addEventListener('open', function (event) {
-    //   console.log('establish a WebSocket connection')
+    // const socket = io('http://localhost:8080');
+    //
+    // socket.on('connect', () => {
+    //   console.log(socket.id);
     // });
     //
-    // webSocket.addEventListener('message', function (event) {
-    //   this.setState({})
+    // socket.on('loopringOrder', (data) => {
+    //   this.setState({data:data})
     // });
   }
 

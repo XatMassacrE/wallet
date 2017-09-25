@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "socket.io-client": "^2.0.3",
-    "ws": "^3.2.0",
     "antd": "^2.6.0",
     "bignumber.js": "^4.0.2",
     "echarts": "^3.7.1",
@@ -33,7 +32,6 @@
     "redux-logger": "^3.0.1",
     "redux-saga": "^0.15.3",
     "scryptsy": "^2.0.0",
-    "socket.io": "^2.0.3",
     "store2": "^2.5.0",
     "uuid": "^3.1.0",
     "wallet-address-validator": "^0.1.0",
