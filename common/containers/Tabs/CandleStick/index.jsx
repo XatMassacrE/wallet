@@ -31,6 +31,29 @@ type State = {
     showData: string
 };
 
+const styles = {
+  tokenContainer:{
+    margin: '20',
+    padding: '5px 250px',
+    display: 'flex',
+    flexFlow: 'row nowrap'
+  },
+  tokenSelector:{
+    margin: '4',
+    padding: '5',
+    border: '1',
+    display: "flex",
+    flex: "1 1 auto",
+    maxWidth: "20%"
+  },
+  mainContainer: {
+    width: '900',
+    height: '400',
+    left: '250',
+    top: '30'
+  }
+}
+
 function splitData(rawData) {
     var categoryData = [];
     var values = []
@@ -452,20 +475,25 @@ class CandleStick extends Component {
     render() {
         return (
             <div>
-              {translate('candlestick_show_token_from')}
-              <UnitDropdown
-                  value={this.state.fromToken}
-                  options={this.props.tokens.map(token => token.symbol).sort()}
-                  onChange={this.onFromUnitChange}
-              />
-              {translate('candlestick_show_token_to')}
-              <UnitDropdown
-                  value={this.state.toToken}
-                  options={this.props.tokens.map(token => token.symbol).sort()}
-                  onChange={this.onToUnitChange}
-              />
-
-              <div id="main" style={{ width: 900, height: 400, left: 100, top: 30 }}></div>
+              <div style={styles.tokenContainer}>
+                <div style={styles.tokenSelector}>
+                  {translate('candlestick_show_token_from')}
+                  <UnitDropdown
+                      value={this.state.fromToken}
+                      options={this.props.tokens.map(token => token.symbol).sort()}
+                      onChange={this.onFromUnitChange}
+                  />
+                </div>
+                <div style={styles.tokenSelector}>
+                {translate('candlestick_show_token_to')}
+                <UnitDropdown
+                    value={this.state.toToken}
+                    options={this.props.tokens.map(token => token.symbol).sort()}
+                    onChange={this.onToUnitChange}
+                />
+                </div>
+              </div>
+              <div id="main" style={styles.mainContainer}></div>
             </div>
         );
     }
