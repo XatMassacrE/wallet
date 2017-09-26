@@ -25,10 +25,6 @@ const tabs = [
   {
     name: 'NAV_GenerateWallet',
     link: 'generate-wallet'
-  },
-  {
-    name: 'Test',
-    link: 'test'
   }
 ];
 

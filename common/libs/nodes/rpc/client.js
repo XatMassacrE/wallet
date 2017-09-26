@@ -100,4 +100,6 @@ export default class RPCClient {
       body: JSON.stringify(requests)
     }).then(r => r.json());
   }
+
+  //Loopring Relayer Methods
 }

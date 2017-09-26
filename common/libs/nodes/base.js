@@ -53,4 +53,22 @@ export default class BaseNode {
   async checkTxisinBlock(hash: string): Promise<boolean> {
     throw new Error('Implement me');
   }
+
+  // Loopring Relayer Methods
+
+  async sendAllowanceTransaction(transaction: string) {
+    throw new Error('Implement me');
+  }
+
+  async sendAllowanceTransactions(transactions: string[]) {
+    throw new Error('Implement me');
+  }
+
+  async getLoopringOrders(address: string): Promise<LoopingOrder[]> {
+    throw new Error('Implement me');
+  }
+
+  async getLoopringOrderDetail(hash: string): Promise<LoopingOrder> {
+    throw new Error('Implement me');
+  }
 }
