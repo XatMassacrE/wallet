@@ -169,11 +169,5 @@ export const NODES = {
     lib: new RPCNode('https://api.myetherapi.com/eth'),
     service: 'MyEtherWallet',
     estimateGas: true
-  },
-  eth_local: {
-    network: 'ETH',
-    lib: new RPCNode('http://127.0.0.1:8545'),
-    service: 'LocalNode',
-    estimateGas: true
   }
 };

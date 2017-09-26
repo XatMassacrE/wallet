@@ -24,8 +24,8 @@ module.exports = {
     NAV_ViewWallet: 'View Wallet Info ',
     NAV_YourWallets: 'Your Wallets ',
     NAV_SendLoopringOrder: 'Send Loopring Order',
-    Approve_Allowance: 'Approve Allowance',
-    NAV_CandleStick: "Candle Stick",
+    NAV_CandleStick: 'Candle Stick',
+    NAV_ViewLoopringOrderHistory: ' Loopring Order History',
 
     /* General */
     x_Access: 'Access ',
@@ -176,6 +176,15 @@ module.exports = {
     SEND_addr: 'To Address ',
     Allow_addr: 'To Address',
     Allow_amount: 'Allow Amount ',
+    Sell_amount: 'Sell Amount',
+    Sell_all: 'Sell All',
+    Buy_amount: 'Buy Amount',
+    Current_Allowance: 'Current Allowed Amount',
+    To_allow: 'to Set Allow',
+    Submit_tx: 'Submit Tx',
+    Current_Balance: 'Current Balance',
+    Set_allow_to_value: 'Set Allowance to',
+
     SEND_amount: 'Amount to Send ',
     SEND_amount_short: 'Amount ',
     SEND_custom: 'Add Custom Token ',
@@ -195,6 +204,35 @@ module.exports = {
       'NOTE: If you encounter an error, you most likely need to add ether to your account to cover the gas cost of sending tokens. Gas is paid in ether. ',
     SENDModal_No: 'No, get me out of here! ',
     SENDModal_Yes: 'Yes, I am sure! Make transaction. ',
+
+    /* Sending Loopring trade */
+    Approve_Allowance: 'Approve Allowance',
+    SEND_loopring_sell_token: 'OutToken',
+    SEND_loopring_sell_addr: 'OutToken Address',
+    SEND_loopring_sell_amount: 'OutToken Amount',
+    SEND_loopring_buy_token: 'inToken',
+    SEND_loopring_buy_amount: 'inToken Amount',
+    tx_fee: 'Loopring Order Fee',
+    save_sharing: 'Save Sharing',
+
+    /*view Loopring order History*/
+    View_Loopring_Order_History: 'Loopring Order History',
+    outToken: 'OutToken',
+    inToken: 'InToken ',
+    outAmount: 'OutToken Amount',
+    inAmount: 'InToken Amount',
+    expiration: 'Expiration',
+    fee: 'Order Fee',
+    savingShare: 'Save Sharing',
+    detail: 'Detail',
+    cancel: 'Cancel',
+    action: 'Actions',
+    Loorping_Order_Hash: 'Tx Hash',
+    Confirm_Cancel: 'sure to Cancel',
+    Cancel_Loopring_Order_Content:
+      'Once the order canceled, miners will stop ring matching it, but will not change the token allowance ！',
+    Cancel_Success: 'Cancel Successfully ',
+    Cancel_Failed: 'Cancel failed',
 
     /* Tokens */
     TOKEN_Addr: 'Address ',
