@@ -5,8 +5,6 @@ import type { State as GenerateWalletState } from './generateWallet';
 import * as config from './config';
 import type { State as ConfigState } from './config';
 
-import * as swap from './swap';
-
 import * as notifications from './notifications';
 import type { State as NotificationsState } from './notifications';
 
@@ -47,7 +45,6 @@ export type State = {
 export default combineReducers({
   ...generateWallet,
   ...config,
-  ...swap,
   ...notifications,
   ...ens,
   ...wallet,
