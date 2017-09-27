@@ -7,7 +7,6 @@ import EthTx from 'ethereumjs-tx';
 import { connect } from 'react-redux';
 import BaseWallet from 'libs/wallet/base';
 import { toUnit, toTokenDisplay } from 'libs/units';
-import ERC20 from 'libs/erc20';
 import { getTransactionFields } from 'libs/transaction';
 import { getTokens } from 'selectors/wallet';
 import { getNetworkConfig } from 'selectors/config';
