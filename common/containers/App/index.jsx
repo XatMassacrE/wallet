@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Footer, Header } from 'components';
 import Notifications from './Notifications';
 import * as actions from 'actions/config';
+import { getNodes } from 'selectors/config';
 
 class App extends Component {
   props: {
@@ -70,7 +71,8 @@ function mapStateToProps(state) {
     languageSelection: state.config.languageSelection,
     languageToggle: state.config.languageToggle,
 
-    gasPriceGwei: state.config.gasPriceGwei
+    gasPriceGwei: state.config.gasPriceGwei,
+    nodes: getNodes(state)
   };
 }
 

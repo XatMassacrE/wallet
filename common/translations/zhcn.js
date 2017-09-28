@@ -24,7 +24,6 @@ module.exports = {
     NAV_YourWallets: '你的钱包 ',
     NAV_SendLoopringOrder: '发送路印交易',
     NAV_CandleStick: '成交行情',
-    NAV_ViewLoopringOrderHistory: '路印交易历史',
 
     /* General */
     x_Access: 'Access ',
@@ -61,6 +60,8 @@ module.exports = {
     MEW_Tagline: '开源JavaScript客户端以太币钱包 ',
     CX_Tagline: '开源JavaScript客户端以太币钱包Chrome扩展 ',
 
+    Approve_Allowance: '代币授权',
+
     /* Footer */
     FOOTER_1: '一个开源的生成以太坊钱包和发送交易的JavaScript客户端工具 ',
     FOOTER_1b: '基于MyEtherWallet的基础之上开的发一款钱包。 ',
@@ -80,7 +81,7 @@ module.exports = {
     sidebar_donate: '捐赠 ',
     sidebar_thanks: '感谢你！！！ ',
 
-    candlestick_show_token_from: '显示以',
+    candlestick_show_token_from: ' ',
     candlestick_show_token_to: '兑换',
     candlestick_token_default: '请选择',
 
@@ -158,7 +159,6 @@ module.exports = {
     SENDModal_Yes: '是的，我确定！发送交易。 ',
 
     /* Sending Loopring trade */
-    Approve_Allowance: '代币授权',
     SEND_loopring_sell_token: '卖出的代币： ',
     SEND_loopring_sell_addr: '卖出代币地址： ',
     SEND_loopring_sell_amount: '卖出代币数额： ',
@@ -169,6 +169,7 @@ module.exports = {
 
     /*view Loopring order History*/
     View_Loopring_Order_History: '路印交易历史',
+    NAV_ViewLoopringOrderHistory: '路印交易历史',
     outToken: '卖出代币',
     inToken: '买入代币',
     outAmount: '卖出代币数量',

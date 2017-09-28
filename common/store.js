@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import sagas from './sagas';
 import { INITIAL_STATE as configInitialState } from 'reducers/config';
 import { INITIAL_STATE as customTokensInitialState } from 'reducers/customTokens';
+import { INITIAL_STATE as customNodesInitialState } from 'reducers/customNodes';
 import throttle from 'lodash/throttle';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import Perf from 'react-addons-perf';
@@ -37,7 +38,8 @@ const configureStore = () => {
       ...configInitialState,
       ...loadStatePropertyOrEmptyObject('config')
     },
-    customTokens: (loadState() || {}).customTokens || customTokensInitialState
+    customTokens: (loadState() || {}).customTokens || customTokensInitialState,
+    customNodes: (loadState() || {}).customNodes || customNodesInitialState
   };
 
   store = createStore(RootReducer, persistedInitialState, middleware);
@@ -54,7 +56,8 @@ const configureStore = () => {
           languageSelection: store.getState().config.languageSelection
         },
         swap: store.getState().swap,
-        customTokens: store.getState().customTokens
+        customTokens: store.getState().customTokens,
+        customNodes: store.getState().customNodes
       });
     }),
     1000

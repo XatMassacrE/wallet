@@ -45,7 +45,6 @@ import { formatGasLimit } from 'utils/formatters';
 import type { ShowNotificationAction } from 'actions/notifications';
 import { showNotification } from 'actions/notifications';
 import { sha3, setLengthLeft, toBuffer } from 'ethereumjs-util';
-import io from 'socket.io-client';
 
 type State = {
   readOnly: boolean,
@@ -116,18 +115,6 @@ export class SendExchange extends React.Component {
     transaction: null,
     pretransaction: null
   };
-
-  componentDidMount() {
-    // const socket = io('http://localhost:8080');
-    //
-    // socket.on('connect', () => {
-    //   console.log(socket.id);
-    // });
-    //
-    // socket.on('loopringOrder', (data) => {
-    //   this.setState({data:data})
-    // });
-  }
 
   componentDidUpdate(_prevProps: Props, prevState: State) {
     if (

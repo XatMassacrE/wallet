@@ -21,6 +21,7 @@ export const INITIAL_STATE: State = {
 };
 
 function changeLanguage(state: State, action: ChangeLanguageAction): State {
+  console.log('nodes:' + Object.keys(NODES)[0]);
   return {
     ...state,
     languageSelection: action.value

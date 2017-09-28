@@ -17,6 +17,9 @@ import type { State as WalletState } from './wallet';
 import * as customTokens from './customTokens';
 import type { State as CustomTokensState } from './customTokens';
 
+import * as customNodes from './customNodes';
+import type { State as CustomNodesState } from './customNodes';
+
 import * as rates from './rates';
 import type { State as RatesState } from './rates';
 
@@ -35,6 +38,7 @@ export type State = {
   ens: EnsState,
   wallet: WalletState,
   customTokens: CustomTokensState,
+  customNodes: CustomNodesState,
   rates: RatesState,
   contracts: ContractsState,
   // Third party reducers (TODO: Fill these out)
@@ -49,6 +53,7 @@ export default combineReducers({
   ...ens,
   ...wallet,
   ...customTokens,
+  ...customNodes,
   ...rates,
   ...contracts,
   form: formReducer,
