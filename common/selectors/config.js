@@ -54,18 +54,3 @@ export function convertToMap(nodes: []){
   }
   return map
 }
-
-type MergedNode = NodeConfig & {
-  custom: boolean
-};
-
-export function getNodes(state: State): MergedNode[] {
-  const nodes: MergedNode[] = [];
-  for (var key in NODES) {
-    var value = { ...NODES[key], custom: false, nodeName: key };
-    nodes.push(value);
-  }
-  return nodes.concat(
-    state.customNodes.map(node => ({ ...node, custom: true }))
-  );
-}
