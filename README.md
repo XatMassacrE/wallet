@@ -78,23 +78,23 @@ export type State = { /* Flowtype definition for state object */ };
 export const INITIAL_STATE: State = { /* Initial state shape */ };
 
 export function namespace(
-	state: State = INITIAL_STATE,
-	action: NamespaceAction
+  state: State = INITIAL_STATE,
+  action: NamespaceAction
 ): State {
-	switch (action.type) {
-		case 'NAMESPACE_NAME_OF_ACTION':
-			return {
-				...state,
-				// Alterations to state
-			};
+  switch (action.type) {
+    case 'NAMESPACE_NAME_OF_ACTION':
+      return {
+        ...state,
+        // Alterations to state
+      };
 
-		case 'NAMESPACE_NAME_OF_SAGA_ACTION':
-		default:
-			// Ensures every action was handled in reducer
-			// Unhandled actions should just fall into default
-			(action: empty);
-			return state;
-	}
+    case 'NAMESPACE_NAME_OF_SAGA_ACTION':
+    default:
+      // Ensures every action was handled in reducer
+      // Unhandled actions should just fall into default
+      (action: empty);
+      return state;
+  }
 }
 ```
 
@@ -106,22 +106,22 @@ export function namespace(
 ```js
 /*** Name of action ***/
 export type NameOfActionAction = {
-	type: 'NAMESPACE_NAME_OF_ACTION',
-	/* Rest of the action object shape */
+  type: 'NAMESPACE_NAME_OF_ACTION',
+  /* Rest of the action object shape */
 };
 
 export function nameOfAction(): NameOfActionAction {
-	return {
-		type: 'NAMESPACE_NAME_OF_ACTION',
-		/* Rest of the action object */
-	};
+  return {
+    type: 'NAMESPACE_NAME_OF_ACTION',
+    /* Rest of the action object */
+  };
 };
 
 /*** Action Union ***/
-export type NamespaceAction =
-	| ActionOneAction
-	| ActionTwoAction
-	| ActionThreeAction;
+export type NamespaceAction = 
+  | ActionOneAction 
+  | ActionTwoAction 
+  | ActionThreeAction;
 ```
 
 #### Action Constants
@@ -147,13 +147,13 @@ import React from "react";
 import "./MyComponent.scss";
 
 export default class MyComponent extends React.component {
-	render() {
-		return (
-			<div className="MyComponent">
-				<div className="MyComponent-child">Hello!</div>
-			</div>
-		);
-	}
+  render() {
+    return ( 
+      < div className = "MyComponent" >
+        < div className = "MyComponent-child" > Hello! < /div> 
+      < /div>
+    );
+  }
 }
 ```
 
@@ -161,15 +161,15 @@ These style modules adhere to [SuitCSS naming convention](https://github.com/sui
 
 ```scss
 .MyComponent {
-	/* Styles */
+  /* Styles */
 
-	&-child {
-		/* Styles */
+  & -child {
+    /* Styles */
 
-		&.is-hidden {
-			display: none;
-		}
-	}
+    & .is - hidden {
+      display: none;
+    }
+  }
 }
 ```
 
@@ -182,7 +182,7 @@ Variables and mixins can be imported from the files in `common/styles`:
 @import "sass/colors";
 
 code {
-	color: $code-color;
+  color: $code-color;
 }
 ```
 
