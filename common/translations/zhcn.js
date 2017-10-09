@@ -81,7 +81,7 @@ module.exports = {
     sidebar_donate: '捐赠 ',
     sidebar_thanks: '感谢你！！！ ',
 
-    candlestick_show_token_from: '显示以',
+    candlestick_show_token_from: ' ',
     candlestick_show_token_to: '兑换',
     candlestick_token_default: '请选择',
 

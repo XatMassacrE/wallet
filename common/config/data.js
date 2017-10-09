@@ -144,6 +144,14 @@ export type NetworkConfig = {
   contracts: ?Array<NetworkContract>
 };
 
+export type NodeConfig = {
+  nodeName: string,
+  network: string;
+  lib: RPCNode;
+  service: string;
+  estimateGas: boolean;
+}
+
 export const NETWORKS: { [key: string]: NetworkConfig } = {
   ETH: {
     name: 'ETH',

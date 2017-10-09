@@ -112,8 +112,8 @@ module.exports = {
     x_Trezor: 'TREZOR ',
     ADD_Trezor_scan: 'Connect to TREZOR ',
 
-    candlestick_show_token_from: 'Show deals from',
-    candlestick_show_token_to: 'To',
+    candlestick_show_token_from: ' ',
+    candlestick_show_token_to: 'With',
     candlestick_token_default: 'Choose',
 
     /* Add Wallet */

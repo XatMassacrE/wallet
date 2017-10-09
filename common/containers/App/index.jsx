@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Footer, Header } from 'components';
 import Notifications from './Notifications';
 import * as actions from 'actions/config';
+import { getNodes, convertToMap } from 'selectors/config'
 
 class App extends Component {
   props: {
@@ -21,7 +22,12 @@ class App extends Component {
     changeLanguage: typeof actions.changeLanguage,
     changeNode: typeof actions.changeNode,
     changeGasPrice: typeof actions.changeGasPrice,
-    handleWindowResize: () => void
+    handleWindowResize: () => void,
+
+    nodes: [],
+    nodesMap: {},
+    addCustomNode: typeof actions.addCustomNode,
+    removeCustomNode: typeof actions.removeCustomNode
   };
 
   render() {
@@ -32,9 +38,13 @@ class App extends Component {
       languageSelection,
       gasPriceGwei,
 
+      nodes,
+      nodesMap,
       changeLanguage,
       changeNode,
-      changeGasPrice
+      changeGasPrice,
+      addCustomNode,
+      removeCustomNode
     } = this.props;
 
     let headerProps = {
@@ -43,9 +53,13 @@ class App extends Component {
       nodeSelection,
       gasPriceGwei,
 
+      nodes,
+      nodesMap,
       changeLanguage,
       changeNode,
-      changeGasPrice
+      changeGasPrice,
+      addCustomNode,
+      removeCustomNode
     };
 
     return (
@@ -64,13 +78,16 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
+  var nodes = getNodes(state)
   return {
     nodeSelection: state.config.nodeSelection,
     nodeToggle: state.config.nodeToggle,
     languageSelection: state.config.languageSelection,
     languageToggle: state.config.languageToggle,
 
-    gasPriceGwei: state.config.gasPriceGwei
+    gasPriceGwei: state.config.gasPriceGwei,
+    nodes: nodes,
+    nodesMap: convertToMap(nodes)
   };
 }
 

@@ -33,24 +33,24 @@ type State = {
 
 const styles = {
   tokenContainer:{
-    margin: '20',
+    margin: '20px',
     padding: '5px 250px',
     display: 'flex',
     flexFlow: 'row nowrap'
   },
   tokenSelector:{
-    margin: '4',
-    padding: '5',
-    border: '1',
+    margin: '4px',
+    padding: '5px',
+    border: '1px',
     display: "flex",
-    flex: "1 1 auto",
+    flex: "1px 1px auto",
     maxWidth: "20%"
   },
   mainContainer: {
-    width: '900',
-    height: '400',
-    left: '250',
-    top: '30'
+    width: '900px',
+    height: '400px',
+    left: '250px',
+    top: '30px'
   }
 }
 

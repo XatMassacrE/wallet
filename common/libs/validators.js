@@ -139,3 +139,22 @@ export function isValidRawTx(rawTx: RawTransaction): boolean {
 
   return true;
 }
+
+export function isAlphaNumericSpace(value): boolean {
+  if (!value) return false;
+  return !/[^a-zA-Z0-9]/.test(value.replace(/ /g, ''));
+}
+
+export function isPositiveNumber(value): boolean {
+  return !isNaN(parseFloat(value)) && isFinite(value) && parseFloat(value) >= 0;
+};
+
+export function isValidURL(str): boolean {
+  var pattern = new RegExp('^(https?:\\/\\/)' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+  return pattern.test(str);
+}
