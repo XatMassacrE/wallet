@@ -146,11 +146,11 @@ export type NetworkConfig = {
 
 export type NodeConfig = {
   nodeName: string,
-  network: string;
-  lib: RPCNode;
-  service: string;
-  estimateGas: boolean;
-}
+  network: string,
+  lib: RPCNode,
+  service: string,
+  estimateGas: boolean
+};
 
 export const NETWORKS: { [key: string]: NetworkConfig } = {
   ETH: {

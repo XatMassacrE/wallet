@@ -3,6 +3,7 @@ import translate from 'translations';
 import type { Token } from 'config/data';
 import { message } from 'antd';
 import OrderListTable from './OrderListTable';
+import io from 'socket.io-client';
 
 import './style.css';
 
@@ -14,24 +15,6 @@ type Props = {
 type State = {
   depth: number
 };
-
-const columns = [
-  {
-    title: '订单',
-    dataIndex: 'orderId',
-    key: 'orderId'
-  },
-  {
-    title: '价格',
-    dataIndex: 'price',
-    key: 'price'
-  },
-  {
-    title: '数量',
-    dataIndex: 'amount',
-    key: 'amount'
-  }
-];
 
 const sellOrders = [
   {
@@ -94,6 +77,18 @@ export default class OrderSideBar extends React.Component {
   state: State = {
     depth: 0.1
   };
+
+  componentDidMount() {
+    // const socket = io('http://localhost:8080');
+    //
+    // socket.on('connect', () => {
+    //   console.log(socket.id);
+    // });
+    //
+    // socket.on('loopringOrder', (data) => {
+    //   this.setState({data:data})
+    // });
+  }
 
   render() {
     return (

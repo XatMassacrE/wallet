@@ -1,5 +1,10 @@
 export default [
   {
+    address: '0x2956356cd2a2bf3202f771f50d3d14a367b48070',
+    symbol: 'WETH',
+    decimal: 18
+  },
+  {
     address: '0xAf30D2a7E90d7DC361c8C4585e9BB7D2F6f15bc7',
     symbol: '1ST',
     decimal: 18

@@ -23,7 +23,7 @@ module.exports = {
     NAV_ViewWallet: '查看钱包信息 ',
     NAV_YourWallets: '你的钱包 ',
     NAV_SendLoopringOrder: '发送路印交易',
-    NAV_CandleStick: "成交行情",
+    NAV_CandleStick: '成交行情',
 
     /* General */
     x_Access: 'Access ',

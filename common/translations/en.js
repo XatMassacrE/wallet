@@ -25,7 +25,7 @@ module.exports = {
     NAV_YourWallets: 'Your Wallets ',
     NAV_SendLoopringOrder: 'Send Loopring Order',
     Approve_Allowance: 'Approve Allowance',
-    NAV_CandleStick: "Candle Stick",
+    NAV_CandleStick: 'Candle Stick',
 
     /* General */
     x_Access: 'Access ',
